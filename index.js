@@ -10,10 +10,10 @@ mongoose.connect("mongodb://127.0.0.1:27017/myFitness");
 const db = mongoose.connection;
 
 db.on("error", (error) => {
-  console.error("Greška pri spajanju:", error);
+  console.error("Error while connecting to DB:", error);
 });
 db.once("open", function () {
-  console.log("Spojeni smo na MongoDB bazu");
+  console.log("Connected to DB");
 });
 
 app.use("/", routes);
