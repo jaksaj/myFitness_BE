@@ -1,41 +1,25 @@
-const express = require('express');
+const express = require("express");
+const mongoose = require("mongoose");
+const routes = require("./routes");
 const app = express();
-const PORT = process.env.PORT || 3000;
 
-// Basic route
-app.get('/', (req, res) => {
-  res.send('Hello, World!');
-});
+app.use(express.json());
 
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
-
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://127.0.0.1:27017/myFitness');
+mongoose.connect("mongodb://127.0.0.1:27017/myFitness");
 
 const db = mongoose.connection;
 
-db.on('error', (error) => {
-    console.error('Greška pri spajanju:', error);
+db.on("error", (error) => {
+  console.error("Error while connecting to DB:", error);
 });
-db.once('open', function() {
-  console.log('Spojeni smo na MongoDB bazu');
-});
-
-const { Schema } = mongoose;
-
-const userSchema = new Schema({
-  username: { type: String, required: true },
-  email: { type: String, required: true },
-  password: { type: String, required: true },
+db.once("open", function () {
+  console.log("Connected to DB");
 });
 
-const User = mongoose.model("User", userSchema);
-const newUser = new User({
-  username: "mate",
-  email: 'mate@pmfst.hr',
-  password: "ohvaho490vs",
+app.use("/", routes);
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
-newUser.save();
