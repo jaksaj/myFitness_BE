@@ -7,4 +7,9 @@ router.post(
   TrainingProgramController.createTrainingProgram
 );
 
+router.get(
+  "/trainingPrograms",
+  TrainingProgramController.getTrainingProgramsForUser
+);
+
 module.exports = router;
