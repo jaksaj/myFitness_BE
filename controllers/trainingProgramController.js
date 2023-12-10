@@ -20,6 +20,20 @@ const createTrainingProgram = async (req, res) => {
   }
 };
 
+const getTrainingProgramsForUser = async (req, res) => {
+  try {
+    const userId = req.userId;
+    console.log(userId);
+    const trainingPrograms = await TrainingProgram.find({ userId }).exec();
+
+    res.status(200).json(trainingPrograms);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 module.exports = {
   createTrainingProgram,
+  getTrainingProgramsForUser,
 };
