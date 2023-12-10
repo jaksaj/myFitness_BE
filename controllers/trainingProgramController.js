@@ -2,7 +2,8 @@ const { TrainingProgram } = require("../models/trainingProgram");
 
 const createTrainingProgram = async (req, res) => {
   try {
-    const { userId, name, type } = req.body;
+    const { name, type } = req.body;
+    userId = req.userId;
 
     const newTrainingProgram = new TrainingProgram({
       userId,
