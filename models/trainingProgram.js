@@ -10,6 +10,7 @@ const trainingProgramSchema = new mongoose.Schema(
       required: true,
       enum: Object.values(TrainingProgramType),
     },
+    workouts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Workout' }],
   },
   { collection: "trainingPrograms" }
 );

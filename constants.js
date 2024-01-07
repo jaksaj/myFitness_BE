@@ -4,4 +4,13 @@ const TrainingProgramType = {
   UPPER_LOWER: "Upper_lower",
 };
 
-module.exports = { TrainingProgramType };
+const WorkoutType = {
+  PUSH: "PUSH",
+  PULL: "PULL",
+  LEGS: "LEGS",
+  FULL_BODY: "FULL_BODY",
+  UPPER: "UPPER",
+  LOWER: "LOWER"
+}
+
+module.exports = { TrainingProgramType, WorkoutType };
