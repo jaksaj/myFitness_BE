@@ -36,8 +36,11 @@ const removeWorkoutFromTrainingProgram = async (req, res) => {
 
     const index = trainingProgram.workouts.indexOf(workoutId);
     if (index !== -1) {
-      trainingProgram.workouts.splice(index, 1);
+      const removedWorkoutId = trainingProgram.workouts.splice(index, 1)[0];
       await trainingProgram.save();
+
+      await Workout.deleteOne({ _id: removedWorkoutId });
+
       res.status(200).json(trainingProgram);
     } else {
       res
