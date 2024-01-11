@@ -12,4 +12,9 @@ router.get(
   TrainingProgramController.getTrainingProgramsForUser
 );
 
+router.delete(
+  "/trainingPrograms/:trainingProgramId",
+  TrainingProgramController.deleteTrainingProgram
+);
+
 module.exports = router;
