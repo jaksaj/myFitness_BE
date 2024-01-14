@@ -33,7 +33,27 @@ const getTrainingProgramsForUser = async (req, res) => {
   }
 };
 
+const deleteTrainingProgram = async (req, res) => {
+  try {
+    const { trainingProgramId } = req.params;
+
+    const deletedTrainingProgram = await TrainingProgram.findByIdAndDelete(
+      trainingProgramId
+    );
+
+    if (!deletedTrainingProgram) {
+      return res.status(404).json({ error: "Training program not found" });
+    }
+
+    res.status(200).json({ message: "Training program deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 module.exports = {
   createTrainingProgram,
   getTrainingProgramsForUser,
+  deleteTrainingProgram,
 };
