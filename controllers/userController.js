@@ -5,11 +5,12 @@ const jwt = require("jsonwebtoken");
 const createUser = async (req, res) => {
   try {
     const { username, email, password } = req.body;
-
+    const saltrunde = 10;
+    const hashpassword = await bcrypt.hash(password, saltrunde)
     const newUser = new User({
       username,
       email,
-      password,
+      password: hashpassword,
     });
 
     const savedUser = await newUser.save();
@@ -33,16 +34,14 @@ const loginUser = async (req, res) => {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
-    //const passwordMatch = await bcrypt.compare(password, user.password);
-    // TODO implement bcrypt
-    if (password !== user.password) {
-      return res.status(401).json({ error: "Invalid credentials" });
+    if (await bcrypt.compare(password, user.password)){
+      const token = jwt.sign({ userId: user._id }, "your-secret-key", {
+        expiresIn: "1h",
+      });
+      res.status(200).json({ message: "Login successful", user, token });
     }
-
-    const token = jwt.sign({ userId: user._id }, "your-secret-key", {
-      expiresIn: "1h",
-    });
-    res.status(200).json({ message: "Login successful", user, token });
+    
+    
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
